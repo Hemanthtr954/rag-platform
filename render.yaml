@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: rag-platform
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      # Qdrant Cloud — free tier at cloud.qdrant.io (1GB, no credit card)
+      # Create a cluster, copy the URL and API key here
+      - key: QDRANT_URL
+        sync: false
+      - key: QDRANT_API_KEY
+        sync: false
+      # Langfuse (optional) — free tier at cloud.langfuse.com
+      - key: LANGFUSE_PUBLIC_KEY
+        sync: false
+      - key: LANGFUSE_SECRET_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rag-platform-db
+          property: connectionString
+      - key: EMBEDDING_MODEL
+        value: "text-embedding-3-small"
+      - key: LLM_MODEL
+        value: "gpt-4o-mini"
+      - key: CHUNK_SIZE
+        value: "512"
+      - key: CHUNK_OVERLAP
+        value: "64"
+      - key: TOP_K
+        value: "5"
+      - key: CONFIDENCE_THRESHOLD
+        value: "0.75"
+
+databases:
+  - name: rag-platform-db
+    plan: free
+    databaseName: rag_platform
+    user: rag

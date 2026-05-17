@@ -11,8 +11,9 @@ class Settings(BaseSettings):
     # Database
     database_url: str = "sqlite+aiosqlite:///./rag.db"
 
-    # Qdrant
+    # Qdrant (use qdrant_api_key for Qdrant Cloud)
     qdrant_url: str = "http://localhost:6333"
+    qdrant_api_key: str = ""
 
     # Langfuse (optional)
     langfuse_public_key: str = ""

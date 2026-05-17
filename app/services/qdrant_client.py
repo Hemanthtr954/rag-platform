@@ -29,7 +29,10 @@ class QdrantService:
 
     def __init__(self) -> None:
         settings = get_settings()
-        self._client = AsyncQdrantClient(url=settings.qdrant_url)
+        self._client = AsyncQdrantClient(
+            url=settings.qdrant_url,
+            api_key=settings.qdrant_api_key or None,
+        )
 
     def _collection_name(self, org_id: str) -> str:
         """Each org gets its own collection — complete isolation."""
